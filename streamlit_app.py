@@ -54,7 +54,7 @@ if streamlit.button('Get Fruit Load List:'):
 #insert new fruit to list
 def insert_new_fruit(newfruit):
   with my_cnx.cursor() as my_cur:
-    my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('from streamlit')")
+    my_cur.execute("insert into pc_rivery_db.public.fruit_load_list values ('"+ newfruit +"')")
     return "Thanks for adding" + " " + newfruit
 
 fruit_add = streamlit.text_input('What fruit would you like to add?')
