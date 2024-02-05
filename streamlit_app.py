@@ -40,6 +40,7 @@ except URLError as e:
   streamlit.error()
 
 # write your own comment - what does this do?
+streamlit.header('View our Fruitlist- Add your favorites')
 def get_fruit_load_list():
   with my_cnx.cursor() as my_cur:
     my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
