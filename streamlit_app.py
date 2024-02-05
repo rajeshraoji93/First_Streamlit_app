@@ -41,14 +41,27 @@ except URLError as e:
 
 streamlit.stop()
 # write your own comment - what does this do?
+def get_fruit_load_list():
+  with my_cnx.cursor() as my_cur:
+    my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
+    return my_cur.fetchall()
 
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
-my_data_row = my_cur.fetchall()
-streamlit.header("The fruit list contains:")
-streamlit.dataframe(my_data_row)
+#Add a button
+if streamlit.button('Get Fruit Load List:'):
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+  streamlit.dataframe(get_fruit_load_list)
 
-fruit_add = streamlit.text_input('What fruit would you like to add?','Jackfruit')
+#insert new fruit to list
+def insert_new_fruit(newfruit):
+  with my_cnx.cursor() as my_cur:
+    my_cur.execute("insert into pc_rivery_db.public.fruit_load_list ('from streamlit')")
+    return "Thanks for adding"+newfruit
+
+fruit_add = streamlit.text_input('What fruit would you like to add?')
+if streamlit.button('Add a fruit to the list:'):
+  my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+  streamlit.text(insert_new_fruit(fruit_add)
+streamlit.stop()
+                 
 streamlit.write('The user entered ', fruit_add)
 
